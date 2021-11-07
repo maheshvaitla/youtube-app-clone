@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined"
+      rel="stylesheet">
+    <title>Document</title>
+    <link href="https://fonts.googleapis.com/css2?family=Abel&display=swap" rel="stylesheet">
+
+   <style>
+       #navbar {
+           display: flex;
+       }
+       img {
+           margin-left: 25px;
+           width: 28px;
+           height: 30px;
+       }
+       #navbar :nth-child(1) {
+           margin-left: 20px;
+           ;
+       }
+       #navbar :nth-child(3){
+        font-family: 'Abel', sans-serif;
+        margin-top: 3px;
+        margin-left: 2px;
+        font-weight: bolder;
+        font-size: 20px;
+       }
+       input  {
+           width: 48%;
+           height: 27px;
+           margin-left: 7%;
+
+       }
+       div :nth-child(6){
+           margin-left: 2%;
+
+       }
+       div :nth-child(8),div :nth-child(9){
+           margin-left: 1%;
+       }
+       div :nth-child(7){
+           margin-left: 8%;
+       }
+       #verticalbox{
+           
+           width: 5%;
+           height: 500px;
+           
+       }
+       #main {
+           display: flex;
+       }
+       #heading  > div{
+           margin: 1px 1%;
+           border: 1px solid rgb(223, 210, 210);
+           border-radius: 15px;
+           background-color:rgba(224, 224, 224, 0.521);
+           padding: 6px;
+           height: 22px;
+           color: black;
+           
+           
+       }
+       #videos {
+
+display: grid;
+grid-template-columns: repeat(4,20%);
+grid-gap: 50px;
+
+}
+
+
+       
+   </style>
+</head>
+<body>
+    <div id="navbar"> 
+        <span class="material-icons-outlined">menu </span>
+        <img src="https://cdn-icons-png.flaticon.com/512/174/174883.png" alt="">
+        <div>YouTube</div>
+        <input type="text" id="query" placeholder="Search">
+        <button onclick="searchVideos()"><span class="material-icons-outlined">search</span></button>
+        <span class="material-icons-outlined"> settings_voice </span>
+        <span class="material-icons-outlined">video_call</span>
+        <span class="material-icons-outlined">apps</span>
+        <span class="material-icons-outlined">notifications</span>
+        <img src="https://piunikaweb.com/wp-content/uploads/2020/08/google-app-featured.jpg" alt="">
+    </div>
+<div style="display: flex;" id="content">
+    <div style="margin-left: 8px ;" id="verticalbox">
+        <div  style="margin-left: 5px; margin-bottom: 40px;" id="homebtnn">
+            <span class="material-icons-outlined">home</span>
+            <div style="font-size: 10px;">Home</div>
+        </div>
+        <div style="margin-left: 5px; margin-bottom: 40px;" id="explorebtn">
+            <span class="material-icons-outlined">explore </span>
+            <div style="font-size: 10px;">Explore</div>
+        </div>
+        <div style="margin-left: 5px; margin-bottom: 40px;" id="subsbtn">
+            <span class="material-icons-outlined"> subscriptions</span>
+            <div style="font-size: 10px;">Subscription</div>
+        </div>
+        <div style="margin-left: 5px; margin-bottom: 40px;" id="libbtn">
+            <span class="material-icons-outlined">library_add</span>
+            <div style="font-size: 10px;">Library</div>
+        </div>
+    </div>
+    <div style="width: 98%;" id="vertcal2box">
+    <hr>
+    <div id="heading" style="display: flex;">
+        <div>live</div>
+        <div>music</div>
+        <div>trending</div>
+        <div>popular</div>
+        <div>Movies</div>
+        <div>songs</div>
+        <div>viral</div>
+        <div>coding</div>
+        <button style="margin-left: 35%; background-color: burlywood;"><a  style=" text-decoration: none;" href="signup.html">Sign Up</a></button>
+    <button style="margin-left: 2%; background-color: burlywood;"><a style=" text-decoration: none;" href="signin.html">Sign In</a></button>
+
+    </div>
+    <hr>
+    <div id="videos"></div>
+    </div>
+</div>
+    
+</body>
+</html>
+<script>
+    
+    // AIzaSyBBpC47f71CBGfd7MPEDG16fVYBrZ8yVQ0
+ // https://youtube.googleapis.com/youtube/v3/search?q=${query}&type=video&key=[YOUR_API_KEY]
+
+
+ let videos = document.getElementById("videos");
+ async function searchVideos(){
+
+    let query =document.getElementById("query").value;
+
+    let res = await fetch(`https://youtube.googleapis.com/youtube/v3/search?q=${query}&type=video&key=AIzaSyBBpC47f71CBGfd7MPEDG16fVYBrZ8yVQ0&maxResults=20`)
+
+    let data = await res.json();
+    console.log(data);
+
+    appendVideos(data.items)
+
+}
+
+
+//searchVideos();
+
+function appendVideos(video_data){
+
+      video_data.innerHTML="null";
+
+       video_data.forEach(({id:{videoId} })=>{
+
+
+        let div = document.createElement("div");
+
+        // e,mbded yt video pn app
+
+        div.innerHTML = `<iframe width="260" height="180" src="https://www.youtube.com/embed/${videoId}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`
+        div.style.marginTop = "15px";
+        videos.append(div);
+
+        
+
+    });
+}
+</script>
+
+
